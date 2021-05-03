@@ -15,7 +15,7 @@ class PaymentOrderCreate(models.TransientModel):
             self.env.context['active_id'])
         messages = ''
         for payment_line in payment_order.line_ids.sorted(
-            lambda x: x.date, reverse=True
+            lambda x: (x.date, x.move_line_id.date)
         ):
             mandate = payment_line.mandate_id
             if not mandate.max_amount_per_date:
